@@ -224,12 +224,6 @@
 </head>
 
 <body>
-    <!-- Promo Banner -->
-    <div class="promo-banner">
-        <i class="fas fa-gift me-2"></i>
-        Free Shipping on your first order! <a href="#">Claim Now</a>
-    </div>
-
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container">

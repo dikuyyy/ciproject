@@ -3,26 +3,6 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <!-- Newsletter Section -->
-        <div class="footer-newsletter">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 mb-3 mb-lg-0">
-                        <h4><i class="fas fa-envelope-open-text me-2"></i> Subscribe to Our Newsletter</h4>
-                        <p class="mb-0">Get the latest updates on new products and upcoming sales</p>
-                    </div>
-                    <div class="col-lg-6">
-                        <form class="newsletter-form" action="<?php echo base_url('newsletter/subscribe'); ?>" method="POST">
-                            <div class="input-group">
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
-                                <button class="btn btn-primary" type="submit">Subscribe</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Main Footer -->
         <div class="footer-main">
             <div class="container">
@@ -45,115 +25,6 @@
                             <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
-
-                    <!-- Quick Links Column -->
-                    <div class="col-lg-2 col-md-6 mb-4">
-                        <h5 class="footer-title">Quick Links</h5>
-                        <ul class="footer-links">
-                            <li><a href="<?php echo base_url('about'); ?>">About Us</a></li>
-                            <li><a href="<?php echo base_url('contact'); ?>">Contact Us</a></li>
-                            <li><a href="<?php echo base_url('faq'); ?>">FAQ</a></li>
-                            <li><a href="<?php echo base_url('blog'); ?>">Blog</a></li>
-                            <li><a href="<?php echo base_url('careers'); ?>">Careers</a></li>
-                            <li><a href="<?php echo base_url('sitemap'); ?>">Sitemap</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Customer Service Column -->
-                    <div class="col-lg-2 col-md-6 mb-4">
-                        <h5 class="footer-title">Customer Service</h5>
-                        <ul class="footer-links">
-                            <li><a href="<?php echo base_url('account'); ?>">My Account</a></li>
-                            <li><a href="<?php echo base_url('orders'); ?>">Order History</a></li>
-                            <li><a href="<?php echo base_url('wishlist'); ?>">Wishlist</a></li>
-                            <li><a href="<?php echo base_url('track-order'); ?>">Track Order</a></li>
-                            <li><a href="<?php echo base_url('returns'); ?>">Returns & Refunds</a></li>
-                            <li><a href="<?php echo base_url('shipping'); ?>">Shipping Info</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact Info Column -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <h5 class="footer-title">Contact Info</h5>
-                        <ul class="footer-contact">
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>123 Shopping Street, Suite 100<br>New York, NY 10001</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-phone-alt"></i>
-                                <span>(021) 1234-5678</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                                <span>support@shophub.com</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-clock"></i>
-                                <span>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat - Sun: 10:00 AM - 4:00 PM</span>
-                            </li>
-                        </ul>
-
-                        <!-- App Download -->
-                        <div class="app-download mt-4">
-                            <p class="mb-2"><strong>Download Our App</strong></p>
-                            <a href="#" class="app-btn">
-                                <i class="fab fa-apple"></i>
-                                <span>App Store</span>
-                            </a>
-                            <a href="#" class="app-btn">
-                                <i class="fab fa-google-play"></i>
-                                <span>Google Play</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payment & Security -->
-        <div class="footer-payment">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <span class="payment-title">We Accept:</span>
-                        <div class="payment-icons">
-                            <i class="fab fa-cc-visa" title="Visa"></i>
-                            <i class="fab fa-cc-mastercard" title="Mastercard"></i>
-                            <i class="fab fa-cc-amex" title="American Express"></i>
-                            <i class="fab fa-cc-paypal" title="PayPal"></i>
-                            <i class="fab fa-cc-stripe" title="Stripe"></i>
-                            <i class="fab fa-cc-apple-pay" title="Apple Pay"></i>
-                            <i class="fab fa-google-pay" title="Google Pay"></i>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <span class="security-badges">
-                            <i class="fas fa-shield-alt me-1"></i> SSL Secured
-                            <i class="fas fa-lock ms-3 me-1"></i> Safe Payment
-                            <i class="fas fa-check-circle ms-3 me-1"></i> Verified
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Footer -->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6 mb-2 mb-md-0">
-                        <p class="copyright mb-0">
-                            &copy; <?php echo date('Y'); ?> <strong>ShopHub</strong>. All Rights Reserved.
-                        </p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <ul class="footer-legal">
-                            <li><a href="<?php echo base_url('privacy-policy'); ?>">Privacy Policy</a></li>
-                            <li><a href="<?php echo base_url('terms'); ?>">Terms of Service</a></li>
-                            <li><a href="<?php echo base_url('cookies'); ?>">Cookie Policy</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -163,6 +34,105 @@
     <a href="#" class="back-to-top" id="backToTop" title="Back to Top">
         <i class="fas fa-chevron-up"></i>
     </a>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold">
+                <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <!-- Item 1 -->
+                <div class="cart-item">
+                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=100" alt="iPhone 15 Pro Max">
+                    <div class="cart-item-details">
+                        <h6 class="cart-item-name">iPhone 15 Pro Max</h6>
+                        <p class="cart-item-specs">256GB, Titanium Blue</p>
+                        <div class="cart-item-price">Rp 24.999.000</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" class="qty-input" value="1" min="1" max="10">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-remove" title="Hapus">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="cart-item">
+                    <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=100" alt="Samsung Galaxy S24 Ultra">
+                    <div class="cart-item-details">
+                        <h6 class="cart-item-name">Samsung Galaxy S24 Ultra</h6>
+                        <p class="cart-item-specs">12GB/256GB, Phantom Black</p>
+                        <div class="cart-item-price">Rp 20.999.000</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" class="qty-input" value="1" min="1" max="10">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-remove" title="Hapus">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="cart-item">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100" alt="Xiaomi 14 Pro">
+                    <div class="cart-item-details">
+                        <h6 class="cart-item-name">Xiaomi 14 Pro</h6>
+                        <p class="cart-item-specs">12GB/512GB, Black</p>
+                        <div class="cart-item-price">Rp 12.999.000</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" class="qty-input" value="2" min="1" max="10">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="btn-remove" title="Hapus">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal (4 items)</span>
+                    <span class="fw-bold">Rp 83.996.000</span>
+                </div>
+                <div class="summary-row">
+                    <span>Ongkos Kirim</span>
+                    <span class="text-success fw-bold">GRATIS</span>
+                </div>
+                <hr>
+                <div class="summary-row total">
+                    <span class="fw-bold">Total</span>
+                    <span class="fw-bold text-primary fs-5">Rp 83.996.000</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <a href="<?php echo base_url('cart'); ?>" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="fas fa-shopping-cart me-2"></i>Lihat Keranjang
+                    </a>
+                    <a href="<?php echo base_url('checkout'); ?>" class="btn btn-primary w-100">
+                        <i class="fas fa-check-circle me-2"></i>Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Styles -->
     <style>
@@ -434,6 +404,182 @@
             visibility: visible;
         }
 
+        /* Cart Offcanvas Styles */
+        .offcanvas {
+            width: 420px !important;
+        }
+
+        .cart-items {
+            max-height: calc(100vh - 350px);
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.3s;
+        }
+
+        .cart-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f8f9fa;
+            padding: 8px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .cart-item-specs {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #f8f9fa;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .qty-btn:hover {
+            background: #ff6b35;
+            color: #fff;
+        }
+
+        .qty-input {
+            width: 40px;
+            height: 28px;
+            border: none;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0;
+        }
+
+        .qty-input:focus {
+            outline: none;
+        }
+
+        /* Remove spinner arrows from number input */
+        .qty-input::-webkit-inner-spin-button,
+        .qty-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .qty-input {
+            -moz-appearance: textfield;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-remove:hover {
+            color: #c82333;
+            transform: scale(1.1);
+        }
+
+        .cart-summary {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 20px;
+            border-top: 2px solid #e0e0e0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .summary-row.total {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .cart-summary hr {
+            margin: 15px 0;
+            opacity: 0.2;
+        }
+
+        .cart-actions {
+            margin-top: 20px;
+        }
+
+        .cart-actions .btn {
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .cart-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* Responsive */
         @media (max-width: 767px) {
             .footer-newsletter h4 {
@@ -457,6 +603,28 @@
             .security-badges {
                 display: block;
                 margin-top: 10px;
+            }
+
+            .offcanvas {
+                width: 100% !important;
+            }
+
+            .cart-item {
+                flex-direction: row;
+                padding: 15px;
+            }
+
+            .cart-item img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .cart-item-name {
+                font-size: 0.9rem;
+            }
+
+            .cart-summary {
+                padding: 15px;
             }
         }
     </style>
@@ -483,6 +651,69 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        const handleShowCanvas = () => {
+            const offcanvasElement = document.getElementById('offcanvasMenu');
+            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+            offcanvas.show();
+        };
+
+        // Cart Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quantity Controls
+            document.querySelectorAll('.qty-btn.minus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = this.nextElementSibling;
+                    const currentValue = parseInt(input.value);
+                    if (currentValue > 1) {
+                        input.value = currentValue - 1;
+                        updateCartTotal();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.qty-btn.plus').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    const currentValue = parseInt(input.value);
+                    const maxValue = parseInt(input.getAttribute('max'));
+                    if (currentValue < maxValue) {
+                        input.value = currentValue + 1;
+                        updateCartTotal();
+                    }
+                });
+            });
+
+            // Remove Item
+            document.querySelectorAll('.btn-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const cartItem = this.closest('.cart-item');
+                    const itemName = cartItem.querySelector('.cart-item-name').textContent;
+                    
+                    if (confirm(`Hapus ${itemName} dari keranjang?`)) {
+                        cartItem.style.opacity = '0';
+                        cartItem.style.transform = 'translateX(100%)';
+                        
+                        setTimeout(() => {
+                            cartItem.remove();
+                            updateCartTotal();
+                            
+                            // Check if cart is empty
+                            const remainingItems = document.querySelectorAll('.cart-item');
+                            if (remainingItems.length === 0) {
+                                document.querySelector('.cart-items').innerHTML = 
+                                    '<div class="text-center py-5"><i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i><p class="text-muted">Keranjang Anda kosong</p></div>';
+                                document.querySelector('.cart-summary').style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+
+            function updateCartTotal() {
+                console.log('Cart total updated');
+            }
         });
     </script>
     </body>

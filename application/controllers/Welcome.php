@@ -22,6 +22,14 @@ class Welcome extends CI_Controller
 	public function index()
 	{
 		$this->load->view('templates/public-layout/header');
+		$this->load->view('pages/index');
+		$this->load->view('templates/public-layout/footer');
+	}
+
+	public function checkout()
+	{
+		$this->load->view('templates/public-layout/header');
+		$this->load->view('pages/checkout');
 		$this->load->view('templates/public-layout/footer');
 	}
 }
