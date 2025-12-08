@@ -1,9 +1,12 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+
+defined('BASEPATH') || exit('No direct script access allowed');
 
 class Welcome extends CI_Controller
 {
 
+	private const HEADER_VIEW = 'templates/public-layout/header';
+	private const FOOTER_VIEW = 'templates/public-layout/footer';
 	/**
 	 * Index Page for this controller.
 	 *
@@ -21,15 +24,20 @@ class Welcome extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->view('templates/public-layout/header');
+		$this->load->view(self::HEADER_VIEW);
 		$this->load->view('pages/index');
-		$this->load->view('templates/public-layout/footer');
+		$this->load->view(self::FOOTER_VIEW);
 	}
 
 	public function checkout()
 	{
-		$this->load->view('templates/public-layout/header');
+		$this->load->view(self::HEADER_VIEW);
 		$this->load->view('pages/checkout');
-		$this->load->view('templates/public-layout/footer');
+		$this->load->view(self::FOOTER_VIEW);
+	}
+
+	public function login()
+	{
+		$this->load->view('pages/login');
 	}
 }

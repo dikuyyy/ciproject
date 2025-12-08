@@ -17,13 +17,6 @@
                         <p class="footer-about">
                             ShopHub is your one-stop destination for all your shopping needs. We offer a wide range of quality products at competitive prices with excellent customer service.
                         </p>
-                        <div class="footer-social">
-                            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-                            <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>

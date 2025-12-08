@@ -224,24 +224,6 @@
 </head>
 
 <body>
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <span><i class="fas fa-phone-alt me-2"></i> Call Us: (021) 1234-5678</span>
-                    <span class="ms-4"><i class="fas fa-envelope me-2"></i> support@shophub.com</span>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="#"><i class="fas fa-question-circle me-1"></i> Help</a>
-                    <a href="#"><i class="fas fa-truck me-1"></i> Track Order</a>
-                    <a href="#"><i class="fab fa-whatsapp me-1"></i> WhatsApp</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Navbar -->
     <nav class="main-navbar sticky-top">
         <div class="container">
             <div class="row align-items-center">
@@ -288,7 +270,7 @@
                                 </ul>
                             </div>
                         <?php else: ?>
-                            <a href="<?php echo base_url('auth/login'); ?>" class="btn btn-outline-primary btn-sm ms-2 d-none d-lg-inline-block">Login</a>
+                            <a href="<?php echo base_url('login'); ?>" class="btn btn-outline-primary btn-sm ms-2 d-none d-lg-inline-block">Login</a>
                         <?php endif; ?>
                     </div>
                 </div>
