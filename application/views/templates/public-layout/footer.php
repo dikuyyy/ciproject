@@ -31,99 +31,17 @@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header border-bottom">
             <h5 class="offcanvas-title fw-bold">
-                <i class="fas fa-shopping-cart me-2"></i>Keranjang Belanja
+                <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
             </h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
             <!-- Cart Items -->
             <div class="cart-items">
-                <!-- Item 1 -->
-                <div class="cart-item">
-                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=100" alt="iPhone 15 Pro Max">
-                    <div class="cart-item-details">
-                        <h6 class="cart-item-name">iPhone 15 Pro Max</h6>
-                        <p class="cart-item-specs">256GB, Titanium Blue</p>
-                        <div class="cart-item-price">Rp 24.999.000</div>
-                    </div>
-                    <div class="cart-item-actions">
-                        <div class="quantity-control">
-                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
-                            <input type="number" class="qty-input" value="1" min="1" max="10">
-                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
-                        </div>
-                        <button class="btn-remove" title="Hapus">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="cart-item">
-                    <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=100" alt="Samsung Galaxy S24 Ultra">
-                    <div class="cart-item-details">
-                        <h6 class="cart-item-name">Samsung Galaxy S24 Ultra</h6>
-                        <p class="cart-item-specs">12GB/256GB, Phantom Black</p>
-                        <div class="cart-item-price">Rp 20.999.000</div>
-                    </div>
-                    <div class="cart-item-actions">
-                        <div class="quantity-control">
-                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
-                            <input type="number" class="qty-input" value="1" min="1" max="10">
-                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
-                        </div>
-                        <button class="btn-remove" title="Hapus">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="cart-item">
-                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100" alt="Xiaomi 14 Pro">
-                    <div class="cart-item-details">
-                        <h6 class="cart-item-name">Xiaomi 14 Pro</h6>
-                        <p class="cart-item-specs">12GB/512GB, Black</p>
-                        <div class="cart-item-price">Rp 12.999.000</div>
-                    </div>
-                    <div class="cart-item-actions">
-                        <div class="quantity-control">
-                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
-                            <input type="number" class="qty-input" value="2" min="1" max="10">
-                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
-                        </div>
-                        <button class="btn-remove" title="Hapus">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </div>
+    
             </div>
 
-            <!-- Cart Summary -->
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Subtotal (4 items)</span>
-                    <span class="fw-bold">Rp 83.996.000</span>
-                </div>
-                <div class="summary-row">
-                    <span>Ongkos Kirim</span>
-                    <span class="text-success fw-bold">GRATIS</span>
-                </div>
-                <hr>
-                <div class="summary-row total">
-                    <span class="fw-bold">Total</span>
-                    <span class="fw-bold text-primary fs-5">Rp 83.996.000</span>
-                </div>
-                
-                <div class="cart-actions">
-                    <a href="<?php echo base_url('cart'); ?>" class="btn btn-outline-primary w-100 mb-2">
-                        <i class="fas fa-shopping-cart me-2"></i>Lihat Keranjang
-                    </a>
-                    <a href="<?php echo base_url('checkout'); ?>" class="btn btn-primary w-100">
-                        <i class="fas fa-check-circle me-2"></i>Checkout
-                    </a>
-                </div>
-            </div>
+   
         </div>
     </div>
 
@@ -646,68 +564,10 @@
             });
         });
 
-        const handleShowCanvas = () => {
-            const offcanvasElement = document.getElementById('offcanvasMenu');
-            const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+        function showCartOffcanvas() {
+            const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasMenu'));
             offcanvas.show();
-        };
-
-        // Cart Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Quantity Controls
-            document.querySelectorAll('.qty-btn.minus').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const input = this.nextElementSibling;
-                    const currentValue = parseInt(input.value);
-                    if (currentValue > 1) {
-                        input.value = currentValue - 1;
-                        updateCartTotal();
-                    }
-                });
-            });
-
-            document.querySelectorAll('.qty-btn.plus').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const input = this.previousElementSibling;
-                    const currentValue = parseInt(input.value);
-                    const maxValue = parseInt(input.getAttribute('max'));
-                    if (currentValue < maxValue) {
-                        input.value = currentValue + 1;
-                        updateCartTotal();
-                    }
-                });
-            });
-
-            // Remove Item
-            document.querySelectorAll('.btn-remove').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const cartItem = this.closest('.cart-item');
-                    const itemName = cartItem.querySelector('.cart-item-name').textContent;
-                    
-                    if (confirm(`Hapus ${itemName} dari keranjang?`)) {
-                        cartItem.style.opacity = '0';
-                        cartItem.style.transform = 'translateX(100%)';
-                        
-                        setTimeout(() => {
-                            cartItem.remove();
-                            updateCartTotal();
-                            
-                            // Check if cart is empty
-                            const remainingItems = document.querySelectorAll('.cart-item');
-                            if (remainingItems.length === 0) {
-                                document.querySelector('.cart-items').innerHTML = 
-                                    '<div class="text-center py-5"><i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i><p class="text-muted">Keranjang Anda kosong</p></div>';
-                                document.querySelector('.cart-summary').style.display = 'none';
-                            }
-                        }, 300);
-                    }
-                });
-            });
-
-            function updateCartTotal() {
-                console.log('Cart total updated');
-            }
-        });
+        }
     </script>
     </body>
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Online Shop - Your Trusted Online Shopping Destination">
     <title><?php echo isset($title) ? $title . ' | ShopHub' : 'ShopHub - Online Shop'; ?></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -241,7 +242,7 @@
                 <div class="col-lg-4 col-md-4 col-6">
                     <div class="nav-icons justify-content-end">
                         <!-- Cart -->
-                        <a href="<?php echo base_url('cart'); ?>" class="nav-icon" title="Cart">
+                        <a href="javascript:void(0);" class="nav-icon" title="Cart" onclick="showCartOffcanvas()">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge"><?php echo isset($cart_count) ? $cart_count : '0'; ?></span>
                         </a>
@@ -292,23 +293,6 @@
     <nav class="category-navbar">
         <div class="container">
             <ul class="nav justify-content-center">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        <i class="fas fa-bars me-2"></i> Categories
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/electronics'); ?>"><i class="fas fa-laptop me-2"></i> Electronics</a></li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/fashion'); ?>"><i class="fas fa-tshirt me-2"></i> Fashion</a></li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/beauty'); ?>"><i class="fas fa-spa me-2"></i> Beauty</a></li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/home'); ?>"><i class="fas fa-home me-2"></i> Home & Living</a></li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/sports'); ?>"><i class="fas fa-running me-2"></i> Sports</a></li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('category/books'); ?>"><i class="fas fa-book me-2"></i> Books</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="<?php echo base_url('categories'); ?>"><i class="fas fa-th me-2"></i> View All</a></li>
-                    </ul>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url('promo'); ?>"><i class="fas fa-percent me-1"></i> Deals</a>
                 </li>
