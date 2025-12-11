@@ -43,14 +43,14 @@
                     <!-- User Menu -->
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="https://ui-avatars.com/api/?name=<?= urlencode($admin_name ?? 'Admin') ?>&background=ff6b35&color=fff" 
-                                 class="user-image rounded-circle shadow" alt="User Image" style="width: 30px; height: 30px;">
+                            <img src="https://ui-avatars.com/api/?name=<?= urlencode($admin_name ?? 'Admin') ?>&background=ff6b35&color=fff"
+                                class="user-image rounded-circle shadow" alt="User Image" style="width: 30px; height: 30px;">
                             <span class="d-none d-md-inline"><?= $admin_name ?? 'Administrator' ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             <li class="user-header text-bg-primary" style="background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);">
-                                <img src="https://ui-avatars.com/api/?name=<?= urlencode($admin_name ?? 'Admin') ?>&background=ff6b35&color=fff&size=100" 
-                                     class="rounded-circle shadow" alt="User Image">
+                                <img src="https://ui-avatars.com/api/?name=<?= urlencode($admin_name ?? 'Admin') ?>&background=ff6b35&color=fff&size=100"
+                                    class="rounded-circle shadow" alt="User Image">
                                 <p>
                                     <?= $admin_name ?? 'Administrator' ?>
                                     <small><?= $admin_email ?? 'admin@shophub.com' ?></small>
@@ -81,7 +81,7 @@
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        
+
                         <!-- Dashboard -->
                         <li class="nav-item">
                             <a href="<?= base_url('admin') ?>" class="nav-link <?= ($active_menu ?? '') == 'dashboard' ? 'active' : '' ?>">
@@ -92,7 +92,7 @@
 
                         <!-- E-Commerce Section -->
                         <li class="nav-header">E-COMMERCE</li>
-                        
+
                         <!-- Products -->
                         <li class="nav-item">
                             <a href="<?= base_url('admin/products') ?>" class="nav-link <?= ($active_menu ?? '') == 'products' ? 'active' : '' ?>">
@@ -117,14 +117,6 @@
                             </a>
                         </li>
 
-                        <!-- Transactions -->
-                        <li class="nav-item">
-                            <a href="<?= base_url('admin/transactions') ?>" class="nav-link <?= ($active_menu ?? '') == 'transactions' ? 'active' : '' ?>">
-                                <i class="nav-icon bi bi-receipt"></i>
-                                <p>Transactions</p>
-                            </a>
-                        </li>
-
                         <!-- Customers -->
                         <li class="nav-item">
                             <a href="<?= base_url('admin/customers') ?>" class="nav-link <?= ($active_menu ?? '') == 'customers' ? 'active' : '' ?>">
@@ -135,7 +127,7 @@
 
                         <!-- Settings Section -->
                         <li class="nav-header">SETTINGS</li>
-                        
+
                         <li class="nav-item">
                             <a href="<?= base_url('admin/settings') ?>" class="nav-link <?= ($active_menu ?? '') == 'settings' ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-gear"></i>
