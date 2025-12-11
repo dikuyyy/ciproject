@@ -69,6 +69,8 @@ class Payment extends CI_Controller
                 ]
             ]);
 
+            
+
             echo json_encode([
                 'clientSecret' => $paymentIntent->client_secret,
                 'paymentIntentId' => $paymentIntent->id
