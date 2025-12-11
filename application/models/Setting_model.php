@@ -85,4 +85,12 @@ class Setting_model extends CI_Model {
             return $this->create($data);
         }
     }
+
+    /**
+     * Get all settings (alias for get)
+     */
+    public function get_all()
+    {
+        return $this->get();
+    }
 }

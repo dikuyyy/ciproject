@@ -78,5 +78,29 @@ $route['invoice/download/(:any)'] = 'invoice/download/$1';
 $route['invoice/view/(:any)'] = 'invoice/view/$1';
 $route['invoice/download-session'] = 'invoice/download_from_session';
 
+// Admin routes
+$route['admin'] = 'admin/index';
+$route['admin/dashboard'] = 'admin/dashboard';
+$route['admin/products'] = 'admin/products';
+$route['admin/products/(:any)'] = 'admin/products/$1';
+$route['admin/products/(:any)/(:num)'] = 'admin/products/$1/$2';
+$route['admin/orders'] = 'admin/orders';
+$route['admin/orders/(:any)'] = 'admin/orders/$1';
+$route['admin/orders/(:any)/(:num)'] = 'admin/orders/$1/$2';
+$route['admin/categories'] = 'admin/categories';
+$route['admin/categories/(:any)'] = 'admin/categories/$1';
+$route['admin/categories/(:any)/(:num)'] = 'admin/categories/$1/$2';
+$route['admin/customers'] = 'admin/customers';
+$route['admin/customers/(:any)'] = 'admin/customers/$1';
+$route['admin/customers/(:any)/(:num)'] = 'admin/customers/$1/$2';
+$route['admin/transactions'] = 'admin/transactions';
+$route['admin/transactions/(:any)'] = 'admin/transactions/$1';
+$route['admin/transactions/(:any)/(:num)'] = 'admin/transactions/$1/$2';
+$route['admin/settings'] = 'admin/settings';
+$route['admin/settings/(:any)'] = 'admin/settings/$1';
+$route['admin/login'] = 'admin/login';
+$route['admin/do_login'] = 'admin/do_login';
+$route['admin/logout'] = 'admin/logout';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
