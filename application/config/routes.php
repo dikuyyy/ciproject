@@ -51,6 +51,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'welcome';
 $route['checkout'] = 'welcome/checkout';
+$route['checkout/success'] = 'welcome/success';
 $route['login'] = 'welcome/login';
+$route['payment/create_payment_intent'] = 'payment/create_payment_intent';
+$route['payment/confirm_payment'] = 'payment/confirm_payment';
+$route['payment/get_public_key'] = 'payment/get_public_key';
+$route['payment/get_secret_key'] = 'payment/get_secret_key';
+$route['payment/webhook'] = 'payment/webhook';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

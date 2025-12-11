@@ -209,26 +209,15 @@
                     <div class="payment-details show" id="cardDetails">
                         <div class="row">
                             <div class="col-12 mb-3">
-                                <label for="cardNumber" class="form-label">Card Number *</label>
-                                <div class="card-input-wrapper">
-                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                                    <i class="fas fa-credit-card card-input-icon"></i>
+                                <label for="card-element" class="form-label">Card Details *</label>
+                                <div id="card-element" class="form-control" style="height: auto; padding: 12px;">
+                                    <!-- Stripe Card Element akan dimuat disini -->
                                 </div>
+                                <div id="card-errors" role="alert" class="text-danger mt-2"></div>
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="cardName" class="form-label">Cardholder Name *</label>
                                 <input type="text" class="form-control" id="cardName" placeholder="JOHN DOE" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="expiry" class="form-label">Expiry Date *</label>
-                                <input type="text" class="form-control" id="expiry" placeholder="MM/YY" maxlength="5" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="cvv" class="form-label">CVV *</label>
-                                <div class="card-input-wrapper">
-                                    <input type="text" class="form-control" id="cvv" placeholder="123" maxlength="4" required>
-                                    <i class="fas fa-lock card-input-icon"></i>
-                                </div>
                             </div>
                         </div>
                         <div class="form-check">
@@ -516,18 +505,15 @@ function handlePlaceOrder() {
 
     if (selectedPayment === 'card') {
         // Validate card details
-        const cardNumber = document.getElementById('cardNumber').value;
         const cardName = document.getElementById('cardName').value;
-        const expiry = document.getElementById('expiry').value;
-        const cvv = document.getElementById('cvv').value;
 
-        if (!cardNumber || !cardName || !expiry || !cvv) {
-            alert('Please fill in all card details');
+        if (!cardName) {
+            alert('Please enter cardholder name');
             return;
         }
 
-        // Process card payment
-        processCardPayment();
+        // Process card payment with Stripe
+        processStripePayment();
     } else if (selectedPayment === 'paypal') {
         alert('Please use the PayPal button above to complete payment');
     } else if (selectedPayment === 'gpay') {
@@ -549,4 +535,145 @@ function processCardPayment() {
         window.location.href = '<?php echo base_url("checkout/success"); ?>';
     }, 2000);
 }
+
+// ==================== STRIPE INTEGRATION ====================
+let stripe;
+let elements;
+let cardElement;
+
+// Initialize Stripe
+async function initializeStripe() {
+    try {
+        const response = await fetch('<?php echo base_url("payment/get_public_key"); ?>');
+        const data = await response.json();
+        
+        stripe = Stripe(data.publicKey);
+        
+        elements = stripe.elements();
+        
+        const style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Poppins", sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+        
+        cardElement = elements.create('card', {
+            style: style,
+            hidePostalCode: true
+        });
+        
+        // Mount Card Element
+        cardElement.mount('#card-element');
+        
+        // Handle real-time validation errors
+        cardElement.on('change', function(event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+        
+        console.log('Stripe initialized successfully');
+    } catch (error) {
+        console.error('Error initializing Stripe:', error);
+    }
+}
+
+// Process Stripe Payment
+async function processStripePayment() {
+    const btn = document.querySelector('.btn-place-order');
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing Payment...';
+    btn.disabled = true;
+    
+    try {
+        // Get customer details
+        const customerName = document.getElementById('cardName').value;
+        const firstName = document.getElementById('firstName').value || 'Customer';
+        const lastName = document.getElementById('lastName').value || '';
+        const fullName = firstName + ' ' + lastName;
+        const email = document.getElementById('email').value || 'customer@example.com';
+        
+        // Calculate total amount (dalam sen/cents untuk Stripe)
+        // Rp 71.996.000 = 71996000 (untuk IDR, tidak perlu dikali 100)
+        const totalAmount = 71996000; // dalam Rupiah
+        
+        // Create Payment Intent
+        const createIntentResponse = await fetch('<?php echo base_url("payment/create_payment_intent"); ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount: totalAmount,
+                currency: 'idr',
+                description: 'Phone Shop Purchase - 4 items',
+                order_id: 'ORD-' + Date.now(),
+                customer_name: fullName,
+                customer_email: email
+            })
+        });
+        
+        const intentData = await createIntentResponse.json();
+        
+        if (intentData.error) {
+            throw new Error(intentData.error);
+        }
+        
+        // Confirm card payment
+        const {error, paymentIntent} = await stripe.confirmCardPayment(
+            intentData.clientSecret,
+            {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: {
+                        name: customerName || fullName
+                    }
+                }
+            }
+        );
+        
+        if (error) {
+            // Show error to customer
+            const errorElement = document.getElementById('card-errors');
+            errorElement.textContent = error.message;
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        } else {
+            // Payment succeeded
+            if (paymentIntent.status === 'succeeded') {
+                sessionStorage.setItem('payment_intent_id', paymentIntent.id);
+                sessionStorage.setItem('payment_status', 'succeeded');
+                
+                window.location.href = '<?php echo base_url("checkout/success"); ?>';
+            }
+        }
+    } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment failed: ' + error.message);
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+// Initialize Stripe when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeStripe();
+});
+
 </script>
