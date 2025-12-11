@@ -52,11 +52,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['checkout'] = 'welcome/checkout';
 $route['checkout/success'] = 'welcome/success';
-$route['login'] = 'welcome/login';
+$route['success'] = 'welcome/success';
+$route['process_checkout'] = 'welcome/process_checkout';
+$route['login'] = 'auth/login';
+$route['logout'] = 'auth/logout';
+$route['register'] = 'auth/register';
+
+// Cart routes
+$route['cart'] = 'cart/index';
+$route['cart/add'] = 'cart/add';
+$route['cart/update'] = 'cart/update';
+$route['cart/remove'] = 'cart/remove';
+$route['cart/clear'] = 'cart/clear';
+$route['cart/data'] = 'cart/get_data';
+
+// Payment routes
 $route['payment/create_payment_intent'] = 'payment/create_payment_intent';
 $route['payment/confirm_payment'] = 'payment/confirm_payment';
 $route['payment/get_public_key'] = 'payment/get_public_key';
 $route['payment/get_secret_key'] = 'payment/get_secret_key';
 $route['payment/webhook'] = 'payment/webhook';
+
+// Invoice routes
+$route['invoice/download/(:any)'] = 'invoice/download/$1';
+$route['invoice/view/(:any)'] = 'invoice/view/$1';
+$route['invoice/download-session'] = 'invoice/download_from_session';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
