@@ -48,8 +48,7 @@
                             <span class="d-none d-md-inline"><?= $admin_name ?? 'Administrator' ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <!-- User image -->
-                            <li class="user-header text-bg-primary">
+                            <li class="user-header text-bg-primary" style="background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);">
                                 <img src="https://ui-avatars.com/api/?name=<?= urlencode($admin_name ?? 'Admin') ?>&background=ff6b35&color=fff&size=100" 
                                      class="rounded-circle shadow" alt="User Image">
                                 <p>
@@ -57,9 +56,8 @@
                                     <small><?= $admin_email ?? 'admin@shophub.com' ?></small>
                                 </p>
                             </li>
-                            <!-- Menu Footer-->
                             <li class="user-footer">
-                                <a href="<?= base_url('admin/profile') ?>" class="btn btn-default btn-flat">Profile</a>
+                                <a href="<?= base_url('admin/settings') ?>" class="btn btn-default btn-flat">Profile</a>
                                 <a href="<?= base_url('admin/logout') ?>" class="btn btn-default btn-flat float-end">Sign out</a>
                             </li>
                         </ul>
@@ -74,8 +72,8 @@
             <!-- Sidebar Brand -->
             <div class="sidebar-brand">
                 <a href="<?= base_url('admin') ?>" class="brand-link">
-                    <i class="bi bi-shop brand-image opacity-75 fs-4 ms-2"></i>
-                    <span class="brand-text fw-light">ShopHub Admin</span>
+                    <i class="bi bi-shop brand-image opacity-75 fs-4"></i>
+                    <span class="brand-text fw-light ms-2">ShopHub Admin</span>
                 </a>
             </div>
 
@@ -119,39 +117,20 @@
                             </a>
                         </li>
 
+                        <!-- Transactions -->
+                        <li class="nav-item">
+                            <a href="<?= base_url('admin/transactions') ?>" class="nav-link <?= ($active_menu ?? '') == 'transactions' ? 'active' : '' ?>">
+                                <i class="nav-icon bi bi-receipt"></i>
+                                <p>Transactions</p>
+                            </a>
+                        </li>
+
                         <!-- Customers -->
                         <li class="nav-item">
                             <a href="<?= base_url('admin/customers') ?>" class="nav-link <?= ($active_menu ?? '') == 'customers' ? 'active' : '' ?>">
                                 <i class="nav-icon bi bi-people"></i>
                                 <p>Customers</p>
                             </a>
-                        </li>
-
-                        <!-- Reports Section -->
-                        <li class="nav-header">REPORTS</li>
-                        
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-graph-up"></i>
-                                <p>
-                                    Reports
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= base_url('admin/reports/sales') ?>" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Sales Report</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= base_url('admin/reports/products') ?>" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Product Report</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <!-- Settings Section -->
