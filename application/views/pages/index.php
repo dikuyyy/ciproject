@@ -214,8 +214,8 @@
                         <div class="col-md-4">
                             <div class="hot-sale-card">
                                 <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400" 
-                                         class="product-image" alt="iPhone 15 Pro Max">
+                                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400"
+                                        class="product-image" alt="iPhone 15 Pro Max">
                                     <span class="product-badge">-25%</span>
                                 </div>
                                 <div class="product-body">
@@ -235,54 +235,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="hot-sale-card">
-                                <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400" 
-                                         class="product-image" alt="Samsung Galaxy S24 Ultra">
-                                    <span class="product-badge">-20%</span>
-                                </div>
-                                <div class="product-body">
-                                    <h5 class="product-name">Samsung Galaxy S24 Ultra</h5>
-                                    <div class="product-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span class="rating-count">(203)</span>
-                                    </div>
-                                    <div class="product-price">
-                                        Rp 16.799.000
-                                        <span class="product-price-old">Rp 20.999.000</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="hot-sale-card">
-                                <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" 
-                                         class="product-image" alt="Xiaomi 14 Pro">
-                                    <span class="product-badge">-30%</span>
-                                </div>
-                                <div class="product-body">
-                                    <h5 class="product-name">Xiaomi 14 Pro</h5>
-                                    <div class="product-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span class="rating-count">(89)</span>
-                                    </div>
-                                    <div class="product-price">
-                                        Rp 9.099.000
-                                        <span class="product-price-old">Rp 12.999.000</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -292,8 +244,8 @@
                         <div class="col-md-4">
                             <div class="hot-sale-card">
                                 <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400" 
-                                         class="product-image" alt="OPPO Find X7 Pro">
+                                    <img src="https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400"
+                                        class="product-image" alt="OPPO Find X7 Pro">
                                     <span class="product-badge">-15%</span>
                                 </div>
                                 <div class="product-body">
@@ -316,8 +268,8 @@
                         <div class="col-md-4">
                             <div class="hot-sale-card">
                                 <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400" 
-                                         class="product-image" alt="Vivo X100 Pro">
+                                    <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400"
+                                        class="product-image" alt="Vivo X100 Pro">
                                     <span class="product-badge">-18%</span>
                                 </div>
                                 <div class="product-body">
@@ -340,8 +292,8 @@
                         <div class="col-md-4">
                             <div class="hot-sale-card">
                                 <div class="position-relative">
-                                    <img src="https://images.unsplash.com/photo-1592286927505-2fd704821596?w=400" 
-                                         class="product-image" alt="Google Pixel 8 Pro">
+                                    <img src="https://images.unsplash.com/photo-1592286927505-2fd704821596?w=400"
+                                        class="product-image" alt="Google Pixel 8 Pro">
                                     <span class="product-badge">-22%</span>
                                 </div>
                                 <div class="product-body">
@@ -383,140 +335,201 @@
         </h2>
 
         <div class="row g-4">
-            <!-- Product 1 -->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400" 
-                             class="product-image" alt="iPhone 15 Pro Max">
-                        <span class="product-badge">New</span>
-                    </div>
-                    <div class="product-body">
-                        <h5 class="product-name">iPhone 15 Pro Max</h5>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span class="rating-count">(156)</span>
+            <!-- Product  -->
+            <?php foreach ($products as $product): ?>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400"
+                                class="product-image" alt="iPhone 15 Pro Max">
                         </div>
-                        <div class="product-price">Rp 24.999.000</div>
-                        <p class="product-description">
-                            Flagship terbaru dari Apple dengan chip A17 Pro, kamera 48MP, dan layar Super Retina XDR 6.7 inci.
-                        </p>
-                        <div class="product-specs">
-                            <i class="fas fa-memory"></i> 256GB/512GB/1TB<br>
-                            <i class="fas fa-microchip"></i> A17 Pro Chip
+                        <div class="product-body">
+                            <h5 class="product-name"><?= $product->product_name ?></h5>
+                            <div class="product-price">$ <?= $product->price ?></div>
+                            <p class="product-description">
+                                <?= $product->description ?>
+                            </p>
+                            <div class="product-specs">
+                                <i class="fas fa-balance-scale"></i> <?=  $product->weight ?> Kilograms<br>
+                            </div>
+                            <button class="btn btn-add-cart" onclick="handleAddToCart(<?= $product->id ?>)">
+                                <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                            </button>
                         </div>
-                        <button class="btn btn-add-cart" onclick="handleShowCanvas()">
-                            <i class="fas fa-shopping-cart me-2"></i> Tambah ke Keranjang
-                        </button>
                     </div>
                 </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400" 
-                             class="product-image" alt="Samsung Galaxy S24 Ultra">
-                        <span class="product-badge">Popular</span>
-                    </div>
-                    <div class="product-body">
-                        <h5 class="product-name">Samsung Galaxy S24 Ultra</h5>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span class="rating-count">(203)</span>
-                        </div>
-                        <div class="product-price">Rp 20.999.000</div>
-                        <p class="product-description">
-                            Smartphone premium dengan S Pen, kamera 200MP, dan performa Snapdragon 8 Gen 3.
-                        </p>
-                        <div class="product-specs">
-                            <i class="fas fa-memory"></i> 12GB RAM / 256GB<br>
-                            <i class="fas fa-microchip"></i> Snapdragon 8 Gen 3
-                        </div>
-                        <button class="btn btn-add-cart">
-                            <i class="fas fa-shopping-cart me-2"></i> Tambah ke Keranjang
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" 
-                             class="product-image" alt="Xiaomi 14 Pro">
-                    </div>
-                    <div class="product-body">
-                        <h5 class="product-name">Xiaomi 14 Pro</h5>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span class="rating-count">(89)</span>
-                        </div>
-                        <div class="product-price">Rp 12.999.000</div>
-                        <p class="product-description">
-                            Ponsel flagship dengan Leica Camera, charging 120W HyperCharge, dan layar AMOLED 120Hz.
-                        </p>
-                        <div class="product-specs">
-                            <i class="fas fa-memory"></i> 12GB RAM / 512GB<br>
-                            <i class="fas fa-microchip"></i> Snapdragon 8 Gen 3
-                        </div>
-                        <button class="btn btn-add-cart">
-                            <i class="fas fa-shopping-cart me-2"></i> Tambah ke Keranjang
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400" 
-                             class="product-image" alt="OPPO Find X7 Pro">
-                    </div>
-                    <div class="product-body">
-                        <h5 class="product-name">OPPO Find X7 Pro</h5>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span class="rating-count">(67)</span>
-                        </div>
-                        <div class="product-price">Rp 11.999.000</div>
-                        <p class="product-description">
-                            Smartphone dengan kamera Hasselblad, layar curved 6.82 inci, dan baterai 5000mAh.
-                        </p>
-                        <div class="product-specs">
-                            <i class="fas fa-memory"></i> 16GB RAM / 512GB<br>
-                            <i class="fas fa-microchip"></i> Dimensity 9300
-                        </div>
-                        <button class="btn btn-add-cart">
-                            <i class="fas fa-shopping-cart me-2"></i> Tambah ke Keranjang
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
 
 <script>
+    const BASE_URL = '<?= base_url() ?>';
 
+    // Handle Add to Cart
+    function handleAddToCart(productId) {
+        $.ajax({
+            url: BASE_URL + 'cart/add',
+            type: 'POST',
+            data: {
+                product_id: productId,
+                qty: 1
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Update cart count in header
+                    updateCartBadge(response.cart_count);
+                    
+                    // Update cart content in offcanvas
+                    updateCartContent(response.cart_html, response.cart_total, response.cart_count);
+                    
+                    // Show cart offcanvas
+                    showCartOffcanvas();
+                    
+                    // Show success toast
+                    showToast('Success', response.message, 'success');
+                } else if (response.redirect) {
+                    // Not logged in, redirect to login
+                    showToast('Info', response.message, 'warning');
+                    setTimeout(function() {
+                        window.location.href = response.redirect_url;
+                    }, 1500);
+                } else {
+                    showToast('Error', response.message, 'error');
+                }
+            },
+            error: function(xhr, status, error) {
+                showToast('Error', 'Failed to add item to cart', 'error');
+            }
+        });
+    }
+
+    // Update Cart Quantity
+    function updateCartQty(productId, change) {
+        const input = document.querySelector(`.cart-item[data-id="${productId}"] .qty-input`);
+        let newQty = parseInt(input.value) + change;
+        
+        if (newQty < 1) {
+            removeFromCart(productId);
+            return;
+        }
+
+        $.ajax({
+            url: BASE_URL + 'cart/update',
+            type: 'POST',
+            data: {
+                product_id: productId,
+                qty: newQty
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    updateCartBadge(response.cart_count);
+                    updateCartContent(response.cart_html, response.cart_total, response.cart_count);
+                }
+            }
+        });
+    }
+
+    // Remove from Cart
+    function removeFromCart(productId) {
+        $.ajax({
+            url: BASE_URL + 'cart/remove',
+            type: 'POST',
+            data: {
+                product_id: productId
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    updateCartBadge(response.cart_count);
+                    updateCartContent(response.cart_html, response.cart_total, response.cart_count);
+                    showToast('Success', response.message, 'success');
+                }
+            }
+        });
+    }
+
+    // Update cart badge in header
+    function updateCartBadge(count) {
+        $('.nav-icon .badge').text(count);
+    }
+
+    // Update cart content in offcanvas
+    function updateCartContent(html, total, count) {
+        $('.offcanvas-body .cart-items').parent().html(html + `
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal (${count} items)</span>
+                    <span class="fw-bold">$ ${parseFloat(total).toFixed(2)}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span class="text-success fw-bold">FREE</span>
+                </div>
+                <hr>
+                <div class="summary-row total">
+                    <span class="fw-bold">Total</span>
+                    <span class="fw-bold text-primary fs-5">$ ${parseFloat(total).toFixed(2)}</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <a href="${BASE_URL}cart" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="fas fa-shopping-cart me-2"></i>View Cart
+                    </a>
+                    <a href="${BASE_URL}checkout" class="btn btn-primary w-100">
+                        <i class="fas fa-check-circle me-2"></i>Checkout
+                    </a>
+                </div>
+            </div>
+        `);
+    }
+
+    // Show cart offcanvas
+    function showCartOffcanvas() {
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasMenu'));
+        offcanvas.show();
+    }
+
+    // Show toast notification
+    function showToast(title, message, type) {
+        // Remove existing toasts
+        $('.toast-container').remove();
+        
+        let bgClass = 'bg-success';
+        let icon = 'fa-check-circle';
+        
+        if (type === 'error') {
+            bgClass = 'bg-danger';
+            icon = 'fa-times-circle';
+        } else if (type === 'warning') {
+            bgClass = 'bg-warning';
+            icon = 'fa-exclamation-circle';
+        }
+
+        const toastHtml = `
+            <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                <div class="toast show ${bgClass} text-white" role="alert">
+                    <div class="toast-header ${bgClass} text-white">
+                        <i class="fas ${icon} me-2"></i>
+                        <strong class="me-auto">${title}</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        $('body').append(toastHtml);
+        
+        // Auto hide after 3 seconds
+        setTimeout(function() {
+            $('.toast-container').fadeOut(300, function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
 </script>

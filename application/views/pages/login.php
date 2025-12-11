@@ -162,6 +162,31 @@
                 <p class="login-subtitle">Login to your account to continue</p>
             </div>
 
+            <!-- Flash Messages -->
+            <?php if ($this->session->flashdata('error')): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <?= $this->session->flashdata('error') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($this->session->flashdata('success')): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <?= $this->session->flashdata('success') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
+            <!-- Demo Credentials -->
+            <div class="alert alert-info mb-3">
+                <small>
+                    <strong><i class="fas fa-info-circle me-1"></i>Demo:</strong>
+                    john.doe@example.com / password123
+                </small>
+            </div>
+
             <!-- Login Form -->
             <form method="post" action="<?php echo base_url('auth/login'); ?>">
                 <!-- Username/Email -->

@@ -278,23 +278,37 @@
                         <i class="fas fa-receipt me-2 text-primary"></i>Order Summary
                     </h5>
 
+                    <!-- Cart Items -->
+                    <?php if (isset($cart_items) && !empty($cart_items)): ?>
+                    <div class="order-items mb-3">
+                        <?php foreach ($cart_items as $item): ?>
+                        <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                            <img src="<?= $item['image'] ? base_url('uploads/products/' . $item['image']) : 'https://via.placeholder.com/60' ?>" 
+                                 alt="<?= htmlspecialchars($item['name']) ?>" 
+                                 class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0"><?= htmlspecialchars($item['name']) ?></h6>
+                                <small class="text-muted">Qty: <?= $item['qty'] ?></small>
+                            </div>
+                            <strong>$ <?= number_format($item['total'], 2) ?></strong>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="mb-3">
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Subtotal (4 items)</span>
-                            <strong>Rp 71.996.000</strong>
+                            <span>Subtotal (<?= isset($item_count) ? $item_count : 0 ?> items)</span>
+                            <strong>$ <?= isset($subtotal) ? number_format($subtotal, 2) : '0.00' ?></strong>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Shipping</span>
                             <strong class="text-success">FREE</strong>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Tax (11%)</span>
-                            <strong>Rp 7.919.560</strong>
-                        </div>
                         <hr>
                         <div class="d-flex justify-content-between mb-3">
                             <span class="h5 mb-0">Total</span>
-                            <strong class="h5 mb-0 text-primary">Rp 79.915.560</strong>
+                            <strong class="h5 mb-0 text-primary">$ <?= isset($total) ? number_format($total, 2) : '0.00' ?></strong>
                         </div>
                     </div>
 
@@ -414,7 +428,8 @@ function initPayPal() {
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     alert('Payment completed successfully by ' + details.payer.name.given_name);
-                    window.location.href = '<?php echo base_url("checkout/success"); ?>';
+                    // Process checkout to save order
+                    processCheckout();
                 });
             },
             onError: function(err) {
@@ -484,7 +499,8 @@ function onGooglePaymentButtonClicked() {
         .then(function(paymentData) {
             console.log('Payment successful:', paymentData);
             alert('Payment successful with Google Pay!');
-            window.location.href = '<?php echo base_url("checkout/success"); ?>';
+            // Process checkout to save order
+            processCheckout();
         })
         .catch(function(err) {
             console.error('Google Pay Error:', err);
@@ -512,12 +528,42 @@ function handlePlaceOrder() {
             return;
         }
 
-        // Process card payment with Stripe
+        // Process card payment with Stripe then checkout
         processStripePayment();
     } else if (selectedPayment === 'paypal') {
         alert('Please use the PayPal button above to complete payment');
     } else if (selectedPayment === 'gpay') {
         alert('Please use the Google Pay button above to complete payment');
+    }
+}
+
+// Process checkout after successful payment
+async function processCheckout() {
+    const formData = new FormData();
+    formData.append('first_name', document.getElementById('firstName').value);
+    formData.append('last_name', document.getElementById('lastName').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('phone', document.getElementById('phone').value);
+    formData.append('address', document.getElementById('address').value);
+    formData.append('city', document.getElementById('city').value);
+    formData.append('zip', document.getElementById('zip').value);
+
+    try {
+        const response = await fetch('<?php echo base_url("welcome/process_checkout"); ?>', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            window.location.href = data.redirect_url;
+        } else {
+            alert(data.message || 'Checkout failed');
+        }
+    } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Checkout failed. Please try again.');
     }
 }
 
@@ -607,9 +653,7 @@ async function processStripePayment() {
         const fullName = firstName + ' ' + lastName;
         const email = document.getElementById('email').value || 'customer@example.com';
         
-        // Calculate total amount (dalam sen/cents untuk Stripe)
-        // Rp 71.996.000 = 71996000 (untuk IDR, tidak perlu dikali 100)
-        const totalAmount = 71996000; // dalam Rupiah
+        const totalAmount = <?= isset($total) ? (int)$total : 0 ?>;
         
         // Create Payment Intent
         const createIntentResponse = await fetch('<?php echo base_url("payment/create_payment_intent"); ?>', {
@@ -619,7 +663,7 @@ async function processStripePayment() {
             },
             body: JSON.stringify({
                 amount: totalAmount,
-                currency: 'idr',
+                currency: 'usd',
                 description: 'Phone Shop Purchase - 4 items',
                 order_id: 'ORD-' + Date.now(),
                 customer_name: fullName,
@@ -659,7 +703,8 @@ async function processStripePayment() {
                 sessionStorage.setItem('payment_intent_id', paymentIntent.id);
                 sessionStorage.setItem('payment_status', 'succeeded');
                 
-                window.location.href = '<?php echo base_url("checkout/success"); ?>';
+                // Process checkout to save order and clear cart
+                await processCheckout();
             }
         }
     } catch (error) {

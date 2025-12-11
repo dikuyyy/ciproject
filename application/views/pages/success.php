@@ -235,19 +235,20 @@
             Thank you for your purchase. Your order has been received and is being processed.
         </p>
 
+        <?php if (isset($order)): ?>
         <!-- Order Details -->
         <div class="order-details">
             <div class="detail-row">
                 <span class="detail-label">Order Number</span>
-                <span class="detail-value">#ORD-2025-001234</span>
+                <span class="detail-value">#<?= $order['order_number'] ?></span>
             </div>
             <div class="detail-row">
                 <span class="detail-label">Order Date</span>
-                <span class="detail-value">December 8, 2025 - 14:30 WIB</span>
+                <span class="detail-value"><?= $order['order_date'] ?></span>
             </div>
             <div class="detail-row">
                 <span class="detail-label">Payment Method</span>
-                <span class="detail-value">Credit Card (Visa ****3456)</span>
+                <span class="detail-value">Credit Card</span>
             </div>
             <div class="detail-row">
                 <span class="detail-label">Payment Status</span>
@@ -256,9 +257,8 @@
             <div class="detail-row">
                 <span class="detail-label">Delivery Address</span>
                 <span class="detail-value">
-                    Jl. Sudirman No. 123<br>
-                    Jakarta, DKI Jakarta 12345<br>
-                    Indonesia
+                    <?= htmlspecialchars($order['customer']['address']) ?><br>
+                    <?= htmlspecialchars($order['customer']['city']) ?>, <?= htmlspecialchars($order['customer']['zip']) ?>
                 </span>
             </div>
         </div>
@@ -266,61 +266,49 @@
         <!-- Order Items -->
         <h3 class="order-items-title">Order Items</h3>
         
+        <?php foreach ($order['items'] as $item): ?>
         <div class="order-item">
-            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=100" alt="iPhone 15 Pro Max" class="item-image">
+            <img src="<?= $item['image'] ? base_url('uploads/products/' . $item['image']) : 'https://via.placeholder.com/100' ?>" 
+                 alt="<?= htmlspecialchars($item['name']) ?>" class="item-image">
             <div class="item-details">
-                <div class="item-name">iPhone 15 Pro Max</div>
-                <div class="item-specs">256GB, Titanium Blue</div>
-                <div class="item-specs">Qty: 1</div>
+                <div class="item-name"><?= htmlspecialchars($item['name']) ?></div>
+                <div class="item-specs">Qty: <?= $item['qty'] ?></div>
             </div>
-            <div class="item-price">Rp 24.999.000</div>
+            <div class="item-price">$ <?= number_format($item['total'], 2) ?></div>
         </div>
-
-        <div class="order-item">
-            <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=100" alt="Samsung Galaxy S24 Ultra" class="item-image">
-            <div class="item-details">
-                <div class="item-name">Samsung Galaxy S24 Ultra</div>
-                <div class="item-specs">12GB/256GB, Phantom Black</div>
-                <div class="item-specs">Qty: 1</div>
-            </div>
-            <div class="item-price">Rp 20.999.000</div>
-        </div>
-
-        <div class="order-item">
-            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100" alt="Xiaomi 14 Pro" class="item-image">
-            <div class="item-details">
-                <div class="item-name">Xiaomi 14 Pro</div>
-                <div class="item-specs">12GB/512GB, Black</div>
-                <div class="item-specs">Qty: 2</div>
-            </div>
-            <div class="item-price">Rp 25.998.000</div>
-        </div>
+        <?php endforeach; ?>
 
         <!-- Summary -->
         <div class="summary-section">
             <div class="summary-row">
-                <span>Subtotal (4 items)</span>
-                <span>Rp 71.996.000</span>
+                <span>Subtotal (<?= $order['item_count'] ?> items)</span>
+                <span>$ <?= number_format($order['subtotal'], 2) ?></span>
             </div>
             <div class="summary-row">
                 <span>Shipping</span>
                 <span class="text-success">FREE</span>
             </div>
-            <div class="summary-row">
-                <span>Tax (11%)</span>
-                <span>Rp 7.919.560</span>
-            </div>
             <div class="summary-row total">
                 <span>Total Paid</span>
-                <span class="amount">Rp 79.915.560</span>
+                <span class="amount">$ <?= number_format($order['total'], 2) ?></span>
             </div>
         </div>
 
+        <?php else: ?>
+        <!-- Fallback if no order data -->
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Order details are not available. Please check your email for confirmation.
+        </div>
+        <?php endif; ?>
+
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button class="btn-download" onclick="downloadInvoice()">
-                <i class="fas fa-download me-2"></i>Download Invoice
-            </button>
+            <?php if (isset($order)): ?>
+            <a href="<?= base_url('invoice/download/' . $order['order_number']) ?>" class="btn-download">
+                <i class="fas fa-file-pdf me-2"></i>Download Invoice (PDF)
+            </a>
+            <?php endif; ?>
             <a href="<?php echo base_url(); ?>" class="btn-continue">
                 <i class="fas fa-home me-2"></i>Continue Shopping
             </a>
@@ -333,81 +321,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    function downloadInvoice() {
-        // Create invoice content
-        const invoiceContent = `
-            ================================================
-                         SHOPHUB INVOICE
-            ================================================
-            
-            Order Number: #ORD-2025-001234
-            Order Date: December 8, 2025 - 14:30 WIB
-            Payment Method: Credit Card (Visa ****3456)
-            Payment Status: PAID
-            
-            ------------------------------------------------
-                         CUSTOMER DETAILS
-            ------------------------------------------------
-            
-            Delivery Address:
-            Jl. Sudirman No. 123
-            Jakarta, DKI Jakarta 12345
-            Indonesia
-            
-            ------------------------------------------------
-                         ORDER ITEMS
-            ------------------------------------------------
-            
-            1. iPhone 15 Pro Max
-               256GB, Titanium Blue
-               Qty: 1 x Rp 24.999.000
-               
-            2. Samsung Galaxy S24 Ultra
-               12GB/256GB, Phantom Black
-               Qty: 1 x Rp 20.999.000
-               
-            3. Xiaomi 14 Pro
-               12GB/512GB, Black
-               Qty: 2 x Rp 12.999.000
-               
-            ------------------------------------------------
-                         ORDER SUMMARY
-            ------------------------------------------------
-            
-            Subtotal (4 items):    Rp 71.996.000
-            Shipping:              FREE
-            Tax (11%):             Rp  7.919.560
-            ------------------------------------------------
-            TOTAL PAID:            Rp 79.915.560
-            ================================================
-            
-            Thank you for shopping with ShopHub!
-            
-            For any questions, please contact:
-            Email: support@shophub.com
-            Phone: (021) 1234-5678
-            
-            ================================================
-        `;
-
-        // Create a Blob with the invoice content
-        const blob = new Blob([invoiceContent], { type: 'text/plain' });
-        const url = window.URL.createObjectURL(blob);
-        
-        // Create a temporary link and trigger download
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'Invoice_ORD-2025-001234.txt';
-        document.body.appendChild(link);
-        link.click();
-        
-        // Clean up
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-        
-        // Show success message
-        alert('Invoice downloaded successfully!');
-    }
-</script>
