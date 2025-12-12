@@ -17,16 +17,29 @@ class Admin extends CI_Controller {
         $this->load->library('session');
         $this->load->database();
         
-        // Check admin login
-        // $this->check_admin_login();
+        // Check admin login (except for login-related methods)
+        $this->check_admin_login();
     }
 
     /**
      * Check if admin is logged in
+     * Excludes login, do_login, and logout methods
      */
     private function check_admin_login()
     {
+        // Get current method
+        $excluded_methods = ['login', 'do_login', 'logout'];
+        $current_method = $this->router->fetch_method();
+        
+        // Skip check for excluded methods
+        if (in_array($current_method, $excluded_methods)) {
+            return;
+        }
+        
+        // Check if admin is logged in
         if (!$this->session->userdata('admin_logged_in')) {
+            // Store intended URL for redirect after login
+            $this->session->set_userdata('admin_redirect_url', current_url());
             redirect(base_url('admin/login'));
         }
     }
@@ -200,7 +213,15 @@ class Admin extends CI_Controller {
                 'admin_email' => $admin->email,
                 'admin_role' => $admin->role ?? 'admin'
             ]);
-            redirect(base_url('admin'));
+            
+            // Redirect to intended URL or admin dashboard
+            $redirect_url = $this->session->userdata('admin_redirect_url');
+            if ($redirect_url) {
+                $this->session->unset_userdata('admin_redirect_url');
+                redirect($redirect_url);
+            } else {
+                redirect(base_url('admin'));
+            }
         } else {
             $this->session->set_flashdata('error', 'Invalid username or password');
             redirect(base_url('admin/login'));

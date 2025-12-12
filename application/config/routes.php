@@ -102,5 +102,23 @@ $route['admin/login'] = 'admin/login';
 $route['admin/do_login'] = 'admin/do_login';
 $route['admin/logout'] = 'admin/logout';
 
+// JWT Auth API routes
+$route['api/auth/login'] = 'auth/api_login';
+$route['api/auth/logout'] = 'auth/api_logout';
+$route['api/auth/refresh'] = 'auth/refresh_token';
+$route['api/auth/verify'] = 'auth/verify';
+$route['api/auth/check'] = 'auth/check';
+
+// Product API routes
+$route['api/products'] = 'api/products';
+$route['api/products/search'] = 'api/search';
+$route['api/products/(:num)'] = 'api/product/$1';
+$route['api/categories'] = 'api/categories';
+$route['api/categories/(:num)'] = 'api/category/$1';
+$route['api/categories/(:num)/products'] = 'api/category_products/$1';
+
+// User API routes (protected)
+$route['api/user/profile'] = 'api/user_profile';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

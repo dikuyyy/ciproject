@@ -54,10 +54,8 @@ class Welcome extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->model('Product_model');
-		
+		// Products will be loaded via API on client-side
 		$data = $this->get_common_data();
-		$data['products'] = $this->Product_model->get_all_with_category();
 
 		$this->load->view(self::HEADER_VIEW, $data);
 		$this->load->view('pages/index', $data);
@@ -262,13 +260,26 @@ class Welcome extends CI_Controller
 		// Also save as last_completed_order for invoice download
 		$this->session->set_userdata('last_completed_order', $completed_order);
 
+		// Send invoice email to customer
+		$email_sent = false;
+		try {
+			$this->load->library('invoice_mailer');
+			$email_sent = $this->invoice_mailer->send_invoice($completed_order, $email);
+			
+			// Also notify admin (optional)
+			$this->invoice_mailer->notify_admin($completed_order);
+		} catch (Exception $e) {
+			log_message('error', 'Failed to send invoice email: ' . $e->getMessage());
+		}
+
 		// Clear cart
 		$this->session->unset_userdata('cart');
 
 		echo json_encode([
 			'success' => true,
-			'message' => 'Order placed successfully',
+			'message' => 'Order placed successfully' . ($email_sent ? '. Invoice sent to your email.' : ''),
 			'order_number' => $order_number,
+			'email_sent' => $email_sent,
 			'redirect_url' => base_url('success')
 		]);
 	}

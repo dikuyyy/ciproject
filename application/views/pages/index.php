@@ -334,31 +334,33 @@
             <i class="fas fa-mobile-alt me-2"></i> All Products
         </h2>
 
-        <div class="row g-4">
-            <!-- Product  -->
-            <?php foreach ($products as $product): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product-card">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400"
-                                class="product-image" alt="iPhone 15 Pro Max">
-                        </div>
-                        <div class="product-body">
-                            <h5 class="product-name"><?= $product->product_name ?></h5>
-                            <div class="product-price">$ <?= $product->price ?></div>
-                            <p class="product-description">
-                                <?= $product->description ?>
-                            </p>
-                            <div class="product-specs">
-                                <i class="fas fa-balance-scale"></i> <?=  $product->weight ?> Kilograms<br>
-                            </div>
-                            <button class="btn btn-add-cart" onclick="handleAddToCart(<?= $product->id ?>)">
-                                <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+        <!-- Loading Spinner -->
+        <div id="products-loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Loading products...</p>
+        </div>
+
+        <!-- Products Container -->
+        <div class="row g-4" id="products-container">
+            <!-- Products will be loaded here via API -->
+        </div>
+
+        <!-- Error Message -->
+        <div id="products-error" class="alert alert-danger d-none" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span id="error-message">Failed to load products. Please try again.</span>
+            <button class="btn btn-sm btn-outline-danger ms-3" onclick="loadProducts()">
+                <i class="fas fa-redo me-1"></i> Retry
+            </button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="products-empty" class="text-center py-5 d-none">
+            <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No products available</h4>
+            <p class="text-muted">Check back later for new products!</p>
         </div>
     </div>
 </div>
@@ -532,4 +534,146 @@
             });
         }, 3000);
     }
+
+    // ============================================
+    // Products API Integration
+    // ============================================
+    
+    // Load products from API
+    function loadProducts() {
+        const container = $('#products-container');
+        const loading = $('#products-loading');
+        const error = $('#products-error');
+        const empty = $('#products-empty');
+        
+        // Show loading, hide others
+        loading.removeClass('d-none');
+        container.empty();
+        error.addClass('d-none');
+        empty.addClass('d-none');
+        
+        $.ajax({
+            url: BASE_URL + 'api/products',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                loading.addClass('d-none');
+                
+                if (response.success && response.data && response.data.length > 0) {
+                    renderProducts(response.data);
+                } else {
+                    empty.removeClass('d-none');
+                }
+            },
+            error: function(xhr, status, errorMsg) {
+                loading.addClass('d-none');
+                error.removeClass('d-none');
+                $('#error-message').text('Failed to load products: ' + errorMsg);
+                console.error('Failed to load products:', errorMsg);
+            }
+        });
+    }
+    
+    // Render products to the container
+    function renderProducts(products) {
+        const container = $('#products-container');
+        container.empty();
+        
+        products.forEach(function(product) {
+            const productHtml = createProductCard(product);
+            container.append(productHtml);
+        });
+    }
+    
+    // Create product card HTML
+    function createProductCard(product) {
+        const price = parseFloat(product.price).toFixed(2);
+        const weight = parseFloat(product.weight).toFixed(2);
+        const description = product.description ? 
+            (product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description) 
+            : 'No description available';
+        
+        return `
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="product-card">
+                    <div class="position-relative">
+                        <img src="${product.image}" 
+                            class="product-image" 
+                            alt="${escapeHtml(product.product_name)}"
+                            onerror="this.src='https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400'">
+                        ${product.qty <= 5 && product.qty > 0 ? '<span class="product-badge">Low Stock</span>' : ''}
+                        ${product.qty <= 0 ? '<span class="product-badge bg-danger">Out of Stock</span>' : ''}
+                    </div>
+                    <div class="product-body">
+                        <h5 class="product-name">${escapeHtml(product.product_name)}</h5>
+                        <div class="product-price">$ ${price}</div>
+                        <p class="product-description">${escapeHtml(description)}</p>
+                        <div class="product-specs">
+                            <i class="fas fa-balance-scale"></i> ${weight} Kilograms<br>
+                            ${product.category_name ? `<i class="fas fa-tag"></i> ${escapeHtml(product.category_name)}` : ''}
+                        </div>
+                        <button class="btn btn-add-cart" 
+                            onclick="handleAddToCart(${product.id})"
+                            ${product.qty <= 0 ? 'disabled' : ''}>
+                            <i class="fas fa-shopping-cart me-2"></i> 
+                            ${product.qty <= 0 ? 'Out of Stock' : 'Add to Cart'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // Search products
+    function searchProducts(query) {
+        if (!query || query.trim() === '') {
+            loadProducts();
+            return;
+        }
+        
+        const container = $('#products-container');
+        const loading = $('#products-loading');
+        const error = $('#products-error');
+        const empty = $('#products-empty');
+        
+        loading.removeClass('d-none');
+        container.empty();
+        error.addClass('d-none');
+        empty.addClass('d-none');
+        
+        $.ajax({
+            url: BASE_URL + 'api/products/search',
+            type: 'GET',
+            data: { q: query },
+            dataType: 'json',
+            success: function(response) {
+                loading.addClass('d-none');
+                
+                if (response.success && response.data && response.data.length > 0) {
+                    renderProducts(response.data);
+                } else {
+                    empty.removeClass('d-none');
+                    $('#products-empty h4').text('No products found');
+                    $('#products-empty p').text('Try searching with different keywords');
+                }
+            },
+            error: function(xhr, status, errorMsg) {
+                loading.addClass('d-none');
+                error.removeClass('d-none');
+            }
+        });
+    }
+    
+    // Load products on page load
+    $(document).ready(function() {
+        loadProducts();
+    });
 </script>

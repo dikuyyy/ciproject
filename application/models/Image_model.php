@@ -45,6 +45,14 @@ class Image_model extends CI_Model {
     }
 
     /**
+     * Get primary/first image of a product (alias for get_first_by_product)
+     */
+    public function get_primary_image($product_id)
+    {
+        return $this->get_first_by_product($product_id);
+    }
+
+    /**
      * Create new image
      */
     public function create($data)
