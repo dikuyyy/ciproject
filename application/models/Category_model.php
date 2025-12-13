@@ -41,6 +41,15 @@ class Category_model extends CI_Model {
      */
     public function create($data)
     {
+        // Generate slug if not provided
+        if (!isset($data['slug']) && isset($data['name'])) {
+            $data['slug'] = $this->generate_slug($data['name']);
+        }
+        
+        // Add timestamp
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        
         $this->db->insert($this->table, $data);
         return $this->db->insert_id();
     }
@@ -50,6 +59,14 @@ class Category_model extends CI_Model {
      */
     public function update($id, $data)
     {
+        // Generate slug if name is updated
+        if (isset($data['name'])) {
+            $data['slug'] = $this->generate_slug($data['name'], $id);
+        }
+        
+        // Update timestamp
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        
         return $this->db->where($this->primaryKey, $id)->update($this->table, $data);
     }
 
@@ -86,5 +103,53 @@ class Category_model extends CI_Model {
         }
         
         return $dropdown;
+    }
+
+    /**
+     * Generate unique slug from name
+     */
+    private function generate_slug($name, $exclude_id = null)
+    {
+        // Convert to lowercase and replace spaces with hyphens
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+        
+        // Remove multiple hyphens
+        $slug = preg_replace('/-+/', '-', $slug);
+        
+        // Trim hyphens from start and end
+        $slug = trim($slug, '-');
+        
+        // Check if slug exists
+        $original_slug = $slug;
+        $counter = 1;
+        
+        while ($this->slug_exists($slug, $exclude_id)) {
+            $slug = $original_slug . '-' . $counter;
+            $counter++;
+        }
+        
+        return $slug;
+    }
+
+    /**
+     * Check if slug exists
+     */
+    private function slug_exists($slug, $exclude_id = null)
+    {
+        $this->db->where('slug', $slug);
+        
+        if ($exclude_id !== null) {
+            $this->db->where($this->primaryKey . ' !=', $exclude_id);
+        }
+        
+        return $this->db->count_all_results($this->table) > 0;
+    }
+
+    /**
+     * Get by slug
+     */
+    public function get_by_slug($slug)
+    {
+        return $this->db->get_where($this->table, ['slug' => $slug])->row();
     }
 }

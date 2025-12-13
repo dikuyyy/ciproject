@@ -100,7 +100,7 @@
                                                 <i class="bi bi-inbox fs-1 text-muted"></i>
                                                 <p class="text-muted mb-0">No products found</p>
                                             </td>
-                                        </tr>
+                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>

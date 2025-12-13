@@ -81,9 +81,15 @@ $route['invoice/download-session'] = 'invoice/download_from_session';
 // Admin routes
 $route['admin'] = 'admin/index';
 $route['admin/dashboard'] = 'admin/dashboard';
+$route['admin/test_routing'] = 'admin/test_routing';  // For debugging
+
+// Products routes (specific routes must come first)
+$route['admin/products/add'] = 'admin/products_add';
+$route['admin/products/edit/(:num)'] = 'admin/products_edit/$1';
+$route['admin/products/view/(:num)'] = 'admin/products_view/$1';
+$route['admin/products/delete/(:num)'] = 'admin/products_delete/$1';
 $route['admin/products'] = 'admin/products';
-$route['admin/products/(:any)'] = 'admin/products/$1';
-$route['admin/products/(:any)/(:num)'] = 'admin/products/$1/$2';
+
 $route['admin/orders'] = 'admin/orders';
 $route['admin/orders/(:any)'] = 'admin/orders/$1';
 $route['admin/orders/(:any)/(:num)'] = 'admin/orders/$1/$2';

@@ -19,8 +19,21 @@ class Migration_Create_Categories_Table extends CI_Migration
                 'constraint' => 100,
                 'null' => FALSE
             ],
+            'slug' => [
+                'type' => 'VARCHAR',
+                'constraint' => 150,
+                'null' => TRUE
+            ],
             'description' => [
                 'type' => 'TEXT',
+                'null' => TRUE
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => TRUE
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
                 'null' => TRUE
             ]
         ]);

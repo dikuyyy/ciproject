@@ -20,6 +20,22 @@
             <!-- Main Content -->
             <div class="app-content">
                 <div class="container-fluid">
+                    <!-- Flash Messages -->
+                    <?php if ($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-2"></i>
+                            <?= $this->session->flashdata('success') ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($this->session->flashdata('error')): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <?= $this->session->flashdata('error') ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -143,4 +159,25 @@
                 document.getElementById('edit_category_description').value = description;
                 new bootstrap.Modal(document.getElementById('editCategoryModal')).show();
             }
+
+            function confirmDelete(url, categoryName) {
+                if (confirm('Are you sure you want to delete category "' + categoryName + '"?')) {
+                    window.location.href = url;
+                }
+            }
+
+            // Initialize DataTable
+            $(document).ready(function() {
+                $('.datatable').DataTable({
+                    "order": [[1, "asc"]],
+                    "language": {
+                        "search": "Search categories:",
+                        "lengthMenu": "Show _MENU_ categories per page",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ categories",
+                        "infoEmpty": "No categories available",
+                        "infoFiltered": "(filtered from _MAX_ total categories)",
+                        "zeroRecords": "No matching categories found"
+                    }
+                });
+            });
         </script>

@@ -28,7 +28,7 @@ class Admin extends CI_Controller {
     private function check_admin_login()
     {
         // Get current method
-        $excluded_methods = ['login', 'do_login', 'logout'];
+        $excluded_methods = ['login', 'do_login', 'logout', 'test_routing'];
         $current_method = $this->router->fetch_method();
         
         // Skip check for excluded methods
@@ -111,16 +111,362 @@ class Admin extends CI_Controller {
     }
 
     /**
+     * Add New Product
+     */
+    public function products_add()
+    {
+        $this->load->model(['Product_model', 'Category_model']);
+        
+        $data = $this->get_common_data('Add Product', 'products');
+        $data['categories'] = $this->Category_model->get_all();
+        $data['mode'] = 'add';
+        
+        // If form submitted
+        if ($this->input->method() === 'post') {
+            // Validation rules
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('product_name', 'Product Name', 'required|trim');
+            $this->form_validation->set_rules('category_id', 'Category', 'required|integer');
+            $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+            $this->form_validation->set_rules('qty', 'Quantity', 'required|integer');
+            
+            if ($this->form_validation->run() === TRUE) {
+                // Prepare data
+                $product_data = [
+                    'product_name' => $this->input->post('product_name'),
+                    'category_id' => $this->input->post('category_id'),
+                    'price' => $this->input->post('price'),
+                    'qty' => $this->input->post('qty'),
+                    'description' => $this->input->post('description'),
+                    'available_status' => $this->input->post('available_status') ? 1 : 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+                
+                // Handle image upload
+                if (!empty($_FILES['image']['name'])) {
+                    $config['upload_path'] = './uploads/products/';
+                    $config['allowed_types'] = 'gif|jpg|jpeg|png|webp';
+                    $config['max_size'] = 2048; // 2MB
+                    $config['encrypt_name'] = TRUE;
+                    
+                    // Create directory if not exists
+                    if (!is_dir($config['upload_path'])) {
+                        mkdir($config['upload_path'], 0777, true);
+                    }
+                    
+                    $this->load->library('upload', $config);
+                    
+                    if ($this->upload->do_upload('image')) {
+                        $upload_data = $this->upload->data();
+                        $product_data['image'] = $upload_data['file_name'];
+                    } else {
+                        $data['error'] = $this->upload->display_errors('', '');
+                        $this->load_admin_view('admin/products_form', $data);
+                        return;
+                    }
+                }
+                
+                // Insert product
+                if ($this->Product_model->create($product_data)) {
+                    $this->session->set_flashdata('success', 'Product added successfully');
+                    redirect(base_url('admin/products'));
+                } else {
+                    $data['error'] = 'Failed to add product';
+                }
+            }
+        }
+        
+        $this->load_admin_view('admin/products_form', $data);
+    }
+
+    /**
+     * Edit Product
+     */
+    public function products_edit($id = null)
+    {
+        if (!$id) {
+            redirect(base_url('admin/products'));
+        }
+        
+        $this->load->model(['Product_model', 'Category_model']);
+        
+        $product = $this->Product_model->get_by_id($id);
+        if (!$product) {
+            $this->session->set_flashdata('error', 'Product not found');
+            redirect(base_url('admin/products'));
+        }
+        
+        $data = $this->get_common_data('Edit Product', 'products');
+        $data['categories'] = $this->Category_model->get_all();
+        $data['product'] = $product;
+        $data['mode'] = 'edit';
+        
+        // If form submitted
+        if ($this->input->method() === 'post') {
+            // Validation rules
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('product_name', 'Product Name', 'required|trim');
+            $this->form_validation->set_rules('category_id', 'Category', 'required|integer');
+            $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+            $this->form_validation->set_rules('qty', 'Quantity', 'required|integer');
+            
+            if ($this->form_validation->run() === TRUE) {
+                // Prepare data
+                $product_data = [
+                    'product_name' => $this->input->post('product_name'),
+                    'category_id' => $this->input->post('category_id'),
+                    'price' => $this->input->post('price'),
+                    'qty' => $this->input->post('qty'),
+                    'description' => $this->input->post('description'),
+                    'available_status' => $this->input->post('available_status') ? 1 : 0,
+                    'updated_at' => date('Y-m-d H:i:s')
+                ];
+                
+                // Handle image upload
+                if (!empty($_FILES['image']['name'])) {
+                    $config['upload_path'] = './uploads/products/';
+                    $config['allowed_types'] = 'gif|jpg|jpeg|png|webp';
+                    $config['max_size'] = 2048; // 2MB
+                    $config['encrypt_name'] = TRUE;
+                    
+                    // Create directory if not exists
+                    if (!is_dir($config['upload_path'])) {
+                        mkdir($config['upload_path'], 0777, true);
+                    }
+                    
+                    $this->load->library('upload', $config);
+                    
+                    if ($this->upload->do_upload('image')) {
+                        // Delete old image
+                        if ($product->image && file_exists('./uploads/products/' . $product->image)) {
+                            unlink('./uploads/products/' . $product->image);
+                        }
+                        
+                        $upload_data = $this->upload->data();
+                        $product_data['image'] = $upload_data['file_name'];
+                    } else {
+                        $data['error'] = $this->upload->display_errors('', '');
+                        $this->load_admin_view('admin/products_form', $data);
+                        return;
+                    }
+                }
+                
+                // Update product
+                if ($this->Product_model->update($id, $product_data)) {
+                    $this->session->set_flashdata('success', 'Product updated successfully');
+                    redirect(base_url('admin/products'));
+                } else {
+                    $data['error'] = 'Failed to update product';
+                }
+            }
+        }
+        
+        $this->load_admin_view('admin/products_form', $data);
+    }
+
+    /**
+     * View Product Detail
+     */
+    public function products_view($id = null)
+    {
+        if (!$id) {
+            redirect(base_url('admin/products'));
+        }
+        
+        $this->load->model('Product_model');
+        
+        $product = $this->Product_model->get_by_id_with_category($id);
+        if (!$product) {
+            $this->session->set_flashdata('error', 'Product not found');
+            redirect(base_url('admin/products'));
+        }
+        
+        $data = $this->get_common_data('Product Detail', 'products');
+        $data['product'] = $product;
+        
+        $this->load_admin_view('admin/products_view', $data);
+    }
+
+    /**
+     * Delete Product
+     */
+    public function products_delete($id = null)
+    {
+        if (!$id) {
+            $this->session->set_flashdata('error', 'Invalid product ID');
+            redirect(base_url('admin/products'));
+        }
+        
+        $this->load->model('Product_model');
+        
+        $product = $this->Product_model->get_by_id($id);
+        if (!$product) {
+            $this->session->set_flashdata('error', 'Product not found');
+            redirect(base_url('admin/products'));
+        }
+        
+        // Delete image file
+        if ($product->image && file_exists('./uploads/products/' . $product->image)) {
+            unlink('./uploads/products/' . $product->image);
+        }
+        
+        // Delete product
+        if ($this->Product_model->delete($id)) {
+            $this->session->set_flashdata('success', 'Product deleted successfully');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to delete product');
+        }
+        
+        redirect(base_url('admin/products'));
+    }
+
+    /**
      * Categories Management
      */
-    public function categories()
+    public function categories($action = null, $id = null)
     {
         $this->load->model('Category_model');
         
-        $data = $this->get_common_data('Categories', 'categories');
-        $data['categories'] = $this->Category_model->get_all();
+        // Handle different actions
+        switch ($action) {
+            case 'add':
+                $this->categories_add();
+                return;
+            case 'edit':
+                $this->categories_edit();
+                return;
+            case 'delete':
+                $this->categories_delete($id);
+                return;
+            default:
+                // List categories
+                $data = $this->get_common_data('Categories', 'categories');
+                $data['categories'] = $this->Category_model->get_all();
+                
+                $this->load_admin_view('admin/categories', $data);
+                break;
+        }
+    }
+
+    /**
+     * Add new category
+     */
+    private function categories_add()
+    {
+        $this->load->library('form_validation');
         
-        $this->load_admin_view('admin/categories', $data);
+        // Validation rules
+        $this->form_validation->set_rules('name', 'Category Name', 'required|trim|max_length[100]');
+        $this->form_validation->set_rules('description', 'Description', 'trim');
+        
+        if ($this->form_validation->run() === FALSE) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Prepare data
+        $data = [
+            'name' => $this->input->post('name'),
+            'description' => $this->input->post('description')
+        ];
+        
+        // Insert to database
+        $result = $this->Category_model->create($data);
+        
+        if ($result) {
+            $this->session->set_flashdata('success', 'Category added successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to add category!');
+        }
+        
+        redirect(base_url('admin/categories'));
+    }
+
+    /**
+     * Edit category
+     */
+    private function categories_edit()
+    {
+        $this->load->library('form_validation');
+        
+        $id = $this->input->post('id');
+        
+        // Check if category exists
+        $category = $this->Category_model->get_by_id($id);
+        if (!$category) {
+            $this->session->set_flashdata('error', 'Category not found!');
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Validation rules
+        $this->form_validation->set_rules('name', 'Category Name', 'required|trim|max_length[100]');
+        $this->form_validation->set_rules('description', 'Description', 'trim');
+        
+        if ($this->form_validation->run() === FALSE) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Prepare data
+        $data = [
+            'name' => $this->input->post('name'),
+            'description' => $this->input->post('description')
+        ];
+        
+        // Update database
+        $result = $this->Category_model->update($id, $data);
+        
+        if ($result) {
+            $this->session->set_flashdata('success', 'Category updated successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update category!');
+        }
+        
+        redirect(base_url('admin/categories'));
+    }
+
+    /**
+     * Delete category
+     */
+    private function categories_delete($id)
+    {
+        if (!$id) {
+            $this->session->set_flashdata('error', 'Invalid category ID!');
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Check if category exists
+        $category = $this->Category_model->get_by_id($id);
+        if (!$category) {
+            $this->session->set_flashdata('error', 'Category not found!');
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Check if category has products
+        $this->load->model('Product_model');
+        $products = $this->db->where('category_id', $id)->count_all_results('tbl_products');
+        
+        if ($products > 0) {
+            $this->session->set_flashdata('error', 'Cannot delete category! There are ' . $products . ' products using this category.');
+            redirect(base_url('admin/categories'));
+            return;
+        }
+        
+        // Delete category
+        $result = $this->Category_model->delete($id);
+        
+        if ($result) {
+            $this->session->set_flashdata('success', 'Category deleted successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to delete category!');
+        }
+        
+        redirect(base_url('admin/categories'));
     }
 
     /**
@@ -236,5 +582,14 @@ class Admin extends CI_Controller {
         $this->session->unset_userdata(['admin_logged_in', 'admin_id', 'admin_name', 'admin_email', 'admin_role']);
         $this->session->set_flashdata('success', 'You have been logged out');
         redirect(base_url('admin/login'));
+    }
+
+    /**
+     * Test Routing (For Debugging)
+     * Access: http://localhost/ciproject/admin/test_routing
+     */
+    public function test_routing()
+    {
+        $this->load->view('test_products_routing');
     }
 }

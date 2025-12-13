@@ -50,6 +50,14 @@ class Migration_Create_products_table extends CI_Migration {
                 'constraint' => 11,
                 'default'    => 0,
             ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ],
         ]);
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_field('CONSTRAINT FOREIGN KEY (category_id) REFERENCES tbl_categories(id) ON DELETE CASCADE ON UPDATE CASCADE');
