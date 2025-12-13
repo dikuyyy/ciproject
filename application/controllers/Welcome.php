@@ -283,4 +283,43 @@ class Welcome extends CI_Controller
 			'redirect_url' => base_url('success')
 		]);
 	}
+
+	/**
+	 * My Orders Page - Display user's orders
+	 */
+	public function my_orders()
+	{
+		// Check if user is logged in
+		if (!$this->session->userdata('customer_logged_in')) {
+			redirect('login');
+			return;
+		}
+
+		// Load models
+		$this->load->model('Transaction_model');
+		$this->load->model('Detail_transaction_model');
+
+		// Get customer ID from session
+		$customer_id = $this->session->userdata('customer_id');
+
+		// Get customer's orders
+		$orders = $this->Transaction_model->get_by_customer($customer_id);
+
+		// Get order details for each order
+		foreach ($orders as &$order) {
+			$order->items = $this->Detail_transaction_model->get_by_order_number($order->order_number);
+			$order->item_count = count($order->items);
+		}
+
+		// Prepare view data
+		$data = array_merge($this->get_common_data(), [
+			'title' => 'My Orders',
+			'orders' => $orders
+		]);
+
+		// Load view
+		$this->load->view(self::HEADER_VIEW, $data);
+		$this->load->view('pages/my_orders', $data);
+		$this->load->view(self::FOOTER_VIEW, $data);
+	}
 }

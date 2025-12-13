@@ -78,6 +78,10 @@ $route['invoice/download/(:any)'] = 'invoice/download/$1';
 $route['invoice/view/(:any)'] = 'invoice/view/$1';
 $route['invoice/download-session'] = 'invoice/download_from_session';
 
+// User Orders routes
+$route['orders'] = 'welcome/my_orders';
+$route['my-orders'] = 'welcome/my_orders';
+
 // Admin routes
 $route['admin'] = 'admin/index';
 $route['admin/dashboard'] = 'admin/dashboard';

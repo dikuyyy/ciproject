@@ -260,10 +260,7 @@
                                             <br><small class="text-muted"><?php echo isset($user_email) ? $user_email : ''; ?></small>
                                         </div>
                                     </li>
-                                    <li><a class="dropdown-item" href="<?php echo base_url('account'); ?>"><i class="fas fa-user"></i> My Account</a></li>
                                     <li><a class="dropdown-item" href="<?php echo base_url('orders'); ?>"><i class="fas fa-box"></i> My Orders</a></li>
-                                    <li><a class="dropdown-item" href="<?php echo base_url('wishlist'); ?>"><i class="fas fa-heart"></i> Wishlist</a></li>
-                                    <li><a class="dropdown-item" href="<?php echo base_url('settings'); ?>"><i class="fas fa-cog"></i> Settings</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
