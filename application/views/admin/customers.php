@@ -26,6 +26,11 @@
                                 <i class="bi bi-people me-2"></i>
                                 All Customers
                             </h3>
+                            <div class="card-tools">
+                                <a href="<?= base_url('admin/customers/add') ?>" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-person-plus me-1"></i> Add Customer
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-striped datatable">
@@ -37,7 +42,7 @@
                                         <th>Phone</th>
                                         <th>Address</th>
                                         <th>Registered</th>
-                                        <th width="10%">Actions</th>
+                                        <th width="15%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +64,9 @@
                                             <td>
                                                 <a href="<?= base_url('admin/customers/view/' . $customer->id) ?>" class="btn btn-sm btn-info" title="View">
                                                     <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="<?= base_url('admin/customers/edit/' . $customer->id) ?>" class="btn btn-sm btn-warning" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-sm btn-danger" title="Delete"
                                                         onclick="confirmDelete('<?= base_url('admin/customers/delete/' . $customer->id) ?>', '<?= addslashes($customer->customer_name) ?>')">
