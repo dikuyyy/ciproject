@@ -597,7 +597,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="product-card">
                     <div class="position-relative">
-                        <img src="${product.image}" 
+                        <img src="${BASE_URL}uploads/products/${product.image}" 
                             class="product-image" 
                             alt="${escapeHtml(product.product_name)}"
                             onerror="this.src='https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400'">
